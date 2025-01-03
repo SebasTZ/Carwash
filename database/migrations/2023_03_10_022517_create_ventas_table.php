@@ -23,6 +23,10 @@ return new class extends Migration
             $table->foreignId('cliente_id')->nullable()->constrained('clientes')->onDelete('set null');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('comprobante_id')->nullable()->constrained('comprobantes')->onDelete('set null');
+            $table->text('comentarios')->nullable(); 
+            $table->string('medio_pago')->default('efectivo'); 
+            $table->decimal('efectivo', 8, 2)->nullable(); 
+            $table->decimal('yape', 8, 2)->nullable();
             $table->timestamps();
         });
     }

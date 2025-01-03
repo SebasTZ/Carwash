@@ -200,6 +200,34 @@
                         <!----User--->
                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
+                        <!-- Comentarios -->
+                        <div class="col-12">
+                            <label for="comentarios" class="form-label">Comentarios:</label>
+                            <textarea name="comentarios" id="comentarios" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <!-- Medio de pago -->
+                        <div class="col-12">
+                            <label for="medio_pago" class="form-label">Medio de pago:</label>
+                            <select name="medio_pago" id="medio_pago" class="form-control selectpicker" title="Selecciona">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="yape">Yape</option>
+                                <option value="mixto">Mixto</option>
+                            </select>
+                        </div>
+
+                        <!-- Efectivo -->
+                        <div class="col-12" id="efectivo_div" style="display: none;">
+                            <label for="efectivo" class="form-label">Efectivo:</label>
+                            <input type="number" name="efectivo" id="efectivo" class="form-control" step="0.1">
+                        </div>
+
+                        <!-- Yape -->
+                        <div class="col-12" id="yape_div" style="display: none;">
+                            <label for="yape" class="form-label">Yape:</label>
+                            <input type="number" name="yape" id="yape" class="form-control" step="0.1">
+                        </div>
+
                         <!--Botones--->
                         <div class="col-12 text-center">
                             <button type="submit" class="btn btn-success" id="guardar">Realizar venta</button>
@@ -237,6 +265,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 <script>
     $(document).ready(function() {
+
+        $('#medio_pago').change(function() {
+            if ($(this).val() === 'mixto') {
+                $('#efectivo_div').show();
+                $('#yape_div').show();
+            } else {
+                $('#efectivo_div').hide();
+                $('#yape_div').hide();
+            }
+        });
 
         $('#producto_id').change(mostrarValores);
 

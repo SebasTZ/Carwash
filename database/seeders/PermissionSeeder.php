@@ -13,7 +13,6 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permisos = [
-    
             //categorías
             'ver-categoria',
             'crear-categoria',
@@ -80,7 +79,9 @@ class PermissionSeeder extends Seeder
         ];
 
         foreach($permisos as $permiso){
-            Permission::create(['name' => $permiso]);
+            if (!Permission::where('name', $permiso)->exists()) {
+                Permission::create(['name' => $permiso]);
+            }
         }
     }
 }

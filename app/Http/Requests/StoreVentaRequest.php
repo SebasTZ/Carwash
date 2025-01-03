@@ -6,20 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreVentaRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
-    public function rules(): array
+    public function rules()
     {
         return [
             'fecha_hora' => 'required',
@@ -28,7 +20,11 @@ class StoreVentaRequest extends FormRequest
             'total' => 'required|numeric',
             'cliente_id' => 'required|exists:clientes,id',
             'user_id' => 'required|exists:users,id',
-            'comprobante_id' => 'required|exists:comprobantes,id'
+            'comprobante_id' => 'required|exists:comprobantes,id',
+            'comentarios' => 'nullable|string',
+            'medio_pago' => 'required|string',
+            'efectivo' => 'nullable|numeric',
+            'yape' => 'nullable|numeric'
         ];
     }
 }

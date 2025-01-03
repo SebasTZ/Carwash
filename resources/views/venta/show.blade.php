@@ -152,6 +152,35 @@
 
                 </div>
             </div>
+            <!--comentarios-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group" id="hide-group">
+                        <span class="input-group-text"><i class="fa-solid fa-comment-dots"></i></span>
+                        <input disabled type="text" class="form-control" value="Comentarios: ">
+                    </div>
+                </div>
+            <div class="col-sm-6">
+                <div class="input-group">
+                    <span title="Comentarios" class="input-group-text" id="icon-form"><i class="fa-solid fa-comment-dots"></i></span>
+                    <input disabled type="text" class="form-control" value="{{$venta->comentarios}}">
+                </div>
+            </div>
+            <!-- Medio de pago -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group" id="hide-group">
+                        <span class="input-group-text"><i class="fa-solid fa-money-bill-transfer"></i></span>
+                        <input disabled type="text" class="form-control" value="Medio de pago: ">
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <span title="Medio de pago" class="input-group-text" id="icon-form"><i class="fa-solid fa-money-bill-transfer"></i></span>
+                        <input disabled type="text" class="form-control" value="{{$venta->medio_pago}}">
+                    </div>
+                </div>
         </div>
 
 

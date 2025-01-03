@@ -47,6 +47,10 @@
                         <th>Fecha y hora</th>
                         <th>Vendedor</th>
                         <th>Total</th>
+                        <th>Comentarios</th>
+                        <th>Medio de pago</th>
+                        <th>Efectivo</th>
+                        <th>Yape</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -72,6 +76,18 @@
                         </td>
                         <td>
                             {{$item->total}}
+                        </td>
+                        <td>
+                            {{$item->comentarios}}
+                        </td>
+                        <td>
+                            {{$item->medio_pago}}
+                        </td>
+                        <td>
+                            {{$item->efectivo}}
+                        </td>
+                        <td>
+                            {{$item->yape}}
                         </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">

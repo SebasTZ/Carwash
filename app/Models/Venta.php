@@ -11,6 +11,20 @@ class Venta extends Model
 
     protected $guarded = ['id'];
 
+    protected $fillable = [
+        'fecha_hora',
+        'impuesto',
+        'numero_comprobante',
+        'total',
+        'cliente_id',
+        'user_id',
+        'comprobante_id',
+        'comentarios', // Nuevo campo
+        'medio_pago', // Nuevo campo
+        'efectivo', // Nuevo campo
+        'yape' // Nuevo campo
+    ];
+
     public function cliente(){
         return $this->belongsTo(Cliente::class);
     }

@@ -20,6 +20,7 @@ class ventaController extends Controller
         $this->middleware('permission:mostrar-venta', ['only' => ['show']]);
         $this->middleware('permission:eliminar-venta', ['only' => ['destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -38,7 +39,6 @@ class ventaController extends Controller
      */
     public function create()
     {
-
         $subquery = DB::table('compra_producto')
             ->select('producto_id', DB::raw('MAX(created_at) as max_created_at'))
             ->groupBy('producto_id');
