@@ -8,6 +8,8 @@ use App\Models\Comprobante;
 use App\Models\Producto;
 use App\Models\Venta;
 use Exception;
+use App\Exports\VentasExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +21,10 @@ class ventaController extends Controller
         $this->middleware('permission:crear-venta', ['only' => ['create', 'store']]);
         $this->middleware('permission:mostrar-venta', ['only' => ['show']]);
         $this->middleware('permission:eliminar-venta', ['only' => ['destroy']]);
+        $this->middleware('permission:reporte-diario-venta', ['only' => ['reporteDiario']]);
+        $this->middleware('permission:reporte-semanal-venta', ['only' => ['reporteSemanal']]);
+        $this->middleware('permission:reporte-mensual-venta', ['only' => ['reporteMensual']]);
+        $this->middleware('permission:exportar-reporte-venta', ['only' => ['exportDiario', 'exportSemanal', 'exportMensual']]);
     }
 
     /**
@@ -141,6 +147,59 @@ class ventaController extends Controller
         //
     }
 
+    public function reporteDiario()
+    {
+    $ventas = Venta::whereDate('fecha_hora', now()->toDateString())
+        ->with(['comprobante', 'cliente.persona', 'user'])
+        ->get();
+
+    return view('venta.reporte', compact('ventas'))->with('reporte', 'diario');
+    }
+
+    public function reporteSemanal()
+    {
+    $ventas = Venta::whereBetween('fecha_hora', [now()->startOfWeek(), now()->endOfWeek()])
+        ->with(['comprobante', 'cliente.persona', 'user'])
+        ->get();
+
+    return view('venta.reporte', compact('ventas'))->with('reporte', 'semanal');
+    }
+
+    public function reporteMensual()
+    {
+    $ventas = Venta::whereMonth('fecha_hora', now()->month)
+        ->with(['comprobante', 'cliente.persona', 'user'])
+        ->get();
+
+    return view('venta.reporte', compact('ventas'))->with('reporte', 'mensual');
+    }
+
+    public function exportDiario()
+    {   
+    $ventas = Venta::whereDate('fecha_hora', now()->toDateString())
+        ->with(['comprobante', 'cliente.persona', 'user'])
+        ->get();
+
+    return Excel::download(new VentasExport($ventas), 'ventas_diarias.xlsx');
+    }
+
+    public function exportSemanal()
+    {
+    $ventas = Venta::whereBetween('fecha_hora', [now()->startOfWeek(), now()->endOfWeek()])
+        ->with(['comprobante', 'cliente.persona', 'user'])
+        ->get();
+
+    return Excel::download(new VentasExport($ventas), 'ventas_semanales.xlsx');
+    }
+
+    public function exportMensual()
+    {
+    $ventas = Venta::whereMonth('fecha_hora', now()->month)
+        ->with(['comprobante', 'cliente.persona', 'user'])
+        ->get();
+
+    return Excel::download(new VentasExport($ventas), 'ventas_mensuales.xlsx');
+    }
     /**
      * Remove the specified resource from storage.
      */

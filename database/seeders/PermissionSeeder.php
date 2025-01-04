@@ -60,6 +60,10 @@ class PermissionSeeder extends Seeder
             'crear-venta',
             'mostrar-venta',
             'eliminar-venta',
+            'reporte-diario-venta',
+            'reporte-semanal-venta',
+            'reporte-mensual-venta',
+            'exportar-reporte-venta',
 
             //Roles
             'ver-role',

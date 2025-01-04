@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','ventas')
+@section('title', 'Reporte de Ventas ' . ucfirst($reporte))
 
 @push('css-datatable')
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
@@ -19,36 +19,23 @@
 @include('layouts.partials.alert')
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4 text-center">Ventas</h1>
+    <h1 class="mt-4 text-center">Reporte de Ventas {{ ucfirst($reporte) }}</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-        <li class="breadcrumb-item active">Ventas</li>
+        <li class="breadcrumb-item"><a href="{{ route('ventas.index') }}">Ventas</a></li>
+        <li class="breadcrumb-item active">Reporte {{ ucfirst($reporte) }}</li>
     </ol>
 
-    @can('crear-venta')
     <div class="mb-4">
-        <a href="{{route('ventas.create')}}">
-            <button type="button" class="btn btn-primary">Añadir nuevo registro</button>
+        <a href="{{ route('ventas.export.' . $reporte) }}">
+            <button type="button" class="btn btn-success">Exportar a Excel</button>
         </a>
-    </div>
-    @endcan
-
-    <div class="mb-4">
-    <a href="{{ route('ventas.reporte.diario') }}">
-        <button type="button" class="btn btn-secondary">Reporte Diario</button>
-    </a>
-    <a href="{{ route('ventas.reporte.semanal') }}">
-        <button type="button" class="btn btn-secondary">Reporte Semanal</button>
-    </a>
-    <a href="{{ route('ventas.reporte.mensual') }}">
-        <button type="button" class="btn btn-secondary">Reporte Mensual</button>
-    </a>
     </div>
 
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Tabla ventas
+            Tabla de ventas {{ $reporte }}
         </div>
         <div class="card-body">
             <table id="datatablesSimple" class="table table-striped">
@@ -63,11 +50,16 @@
                         <th>Medio de pago</th>
                         <th>Efectivo</th>
                         <th>Yape</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $total = 0;
+                    @endphp
                     @foreach ($ventas as $item)
+                    @php
+                        $total += $item->total;
+                    @endphp
                     <tr>
                         <td>
                             <p class="fw-semibold mb-1">{{$item->comprobante->tipo_comprobante}}</p>
@@ -101,49 +93,13 @@
                         <td>
                             {{$item->yape}}
                         </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-
-                                @can('mostrar-venta')
-                                <form action="{{route('ventas.show', ['venta'=>$item]) }}" method="get">
-                                    <button type="submit" class="btn btn-success">
-                                        Ver
-                                    </button>
-                                </form>
-                                @endcan
-
-                                @can('eliminar-venta')
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$item->id}}">Eliminar</button>
-                                @endcan
-                            </div>
-                        </td>
                     </tr>
-
-                    <!-- Modal de confirmación-->
-                    <div class="modal fade" id="confirmModal-{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Mensaje de confirmación</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Seguro que quieres eliminar el registro?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <form action="{{ route('ventas.destroy',['venta'=>$item->id]) }}" method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger">Confirmar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                 </tbody>
             </table>
+            <div class="mt-4">
+                <h4>Total: {{$total}}</h4>
+            </div>
         </div>
     </div>
 
@@ -153,8 +109,6 @@
 @push('js')
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
 <script>
-    // Simple-DataTables
-    // https://github.com/fiduswriter/Simple-DataTables/wiki
     window.addEventListener('DOMContentLoaded', event => {
         const dataTable = new simpleDatatables.DataTable("#datatablesSimple", {})
     });

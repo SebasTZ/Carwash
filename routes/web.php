@@ -46,6 +46,14 @@ Route::get('/login',[loginController::class,'index'])->name('login');
 Route::post('/login',[loginController::class,'login']);
 Route::get('/logout',[logoutController::class,'logout'])->name('logout');
 
+Route::get('ventas/reporte/diario', [VentaController::class, 'reporteDiario'])->name('ventas.reporte.diario');
+Route::get('ventas/reporte/semanal', [VentaController::class, 'reporteSemanal'])->name('ventas.reporte.semanal');
+Route::get('ventas/reporte/mensual', [VentaController::class, 'reporteMensual'])->name('ventas.reporte.mensual');
+
+Route::get('ventas/export/diario', [VentaController::class, 'exportDiario'])->name('ventas.export.diario');
+Route::get('ventas/export/semanal', [VentaController::class, 'exportSemanal'])->name('ventas.export.semanal');
+Route::get('ventas/export/mensual', [VentaController::class, 'exportMensual'])->name('ventas.export.mensual');
+
 Route::get('/401', function () {
     return view('pages.401');
 });
