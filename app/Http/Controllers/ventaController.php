@@ -78,8 +78,14 @@ class ventaController extends Controller
         try{
             DB::beginTransaction();
 
+            //Obtener el tipo de comprobante
+            $comprobante = Comprobante::find($request->comprobante_id);
+
+            //Generar número de comprobante
+            $numero_comprobante = Venta::generarNumeroComprobante($request->comprobante_id);
+
             //Llenar mi tabla venta
-            $venta = Venta::create($request->validated());
+            $venta = Venta::create(array_merge($request->validated(), ['numero_comprobante' => $numero_comprobante]));
 
             //Llenar mi tabla venta_producto
             //1. Recuperar los arrays
@@ -118,6 +124,7 @@ class ventaController extends Controller
             DB::commit();
         }catch(Exception $e){
             DB::rollBack();
+            return redirect()->route('ventas.create')->with('error', 'Error al realizar la venta: ' . $e->getMessage());
         }
 
         return redirect()->route('ventas.index')->with('success','Venta exitosa');

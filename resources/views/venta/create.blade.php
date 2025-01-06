@@ -168,13 +168,10 @@
 
                         <!--Numero de comprobante-->
                         <div class="col-12">
-                            <label for="numero_comprobante" class="form-label">Numero de comprobante:</label>
-                            <input required type="text" name="numero_comprobante" id="numero_comprobante" class="form-control">
-                            @error('numero_comprobante')
-                            <small class="text-danger">{{ '*'.$message }}</small>
-                            @enderror
+                            <label for="numero_comprobante" class="form-label">Número de comprobante:</label>
+                            <input type="text" name="numero_comprobante" id="numero_comprobante" class="form-control" readonly>
                         </div>
-
+                            
                         <!--Impuesto---->
                         <div class="col-sm-6">
                             <label for="impuesto" class="form-label">Impuesto(IGV):</label>

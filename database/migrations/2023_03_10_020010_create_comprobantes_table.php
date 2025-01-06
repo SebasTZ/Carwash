@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('comprobantes', function (Blueprint $table) {
             $table->id();
             $table->string('tipo_comprobante',50);
+            $table->string('serie',5)->default('B');
             $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });

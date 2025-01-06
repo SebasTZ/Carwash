@@ -37,6 +37,15 @@ class Venta extends Model
         return $this->belongsTo(Comprobante::class);
     }
 
+    public static function generarNumeroComprobante($comprobante_id)
+    {
+    $comprobante = Comprobante::find($comprobante_id);
+    $ultimaVenta = self::where('comprobante_id', $comprobante->id)->latest()->first();
+    $ultimoNumero = $ultimaVenta ? intval(substr($ultimaVenta->numero_comprobante, 1)) : 0;
+    $nuevoNumero = $ultimoNumero + 1;
+    return $comprobante->serie . str_pad($nuevoNumero, 4, '0', STR_PAD_LEFT);
+    }
+
     public function productos(){
         return $this->belongsToMany(Producto::class)->withTimestamps()
         ->withPivot('cantidad','precio_venta','descuento');
