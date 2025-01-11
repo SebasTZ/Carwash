@@ -171,17 +171,19 @@
                             @enderror
                         </div>
 
-                        <!--Fecha--->
+                        <!--Checkbox para IGV-->
                         <div class="col-sm-6 mb-2">
-                            <label for="fecha" class="form-label">Fecha:</label>
-                            <input readonly type="date" name="fecha" id="fecha" class="form-control border-success" value="<?php echo date("Y-m-d") ?>">
-                            <?php
+                            <label for="con_igv" class="form-label">¿Incluir IGV?</label>
+                            <input type="checkbox" name="con_igv" id="con_igv" class="form-check-input">
+                        </div>
 
-                            use Carbon\Carbon;
-
-                            $fecha_hora = Carbon::now()->toDateTimeString();
-                            ?>
-                            <input type="hidden" name="fecha_hora" value="{{$fecha_hora}}">
+                        <!--Fecha de compra--->
+                        <div class="col-sm-6 mb-2">
+                            <label for="fecha" class="form-label">Fecha de compra:</label>
+                            <input type="date" name="fecha" id="fecha" class="form-control border-success" value="<?php echo date("Y-m-d") ?>">
+                            @error('fecha')
+                            <small class="text-danger">{{ '*'.$message }}</small>
+                            @enderror
                         </div>
 
                         <!--Botones--->
@@ -230,6 +232,10 @@
         });
 
         $('#comprobante_id').change(function() {
+            recalcularIGV();
+        });
+
+        $('#con_igv').change(function() {
             recalcularIGV();
         });
 
@@ -378,7 +384,8 @@
 
     function recalcularIGV() {
         let tipoComprobante = $('#comprobante_id option:selected').text();
-        if (tipoComprobante === 'Factura') {
+        let incluirIGV = $('#con_igv').is(':checked');
+        if (tipoComprobante === 'Factura' && incluirIGV) {
             igv = round(sumas / 100 * impuesto);
         } else {
             igv = 0;
@@ -426,4 +433,4 @@
         })
     }
 </script>
-@endpushphp
+@endpush

@@ -111,6 +111,20 @@
 
             $('#box-razon-social').show();
         });
+
+        $('#documento_id').on('change', function() {
+            let documentoSeleccionado = $('#documento_id option:selected').text();
+            if (documentoSeleccionado === 'DNI') {
+                $('#numero_documento').attr('maxlength', 8);
+                $('#numero_documento').attr('minlength', 8);
+            } else if (documentoSeleccionado === 'RUC') {
+                $('#numero_documento').attr('maxlength', 11);
+                $('#numero_documento').attr('minlength', 11);
+            } else {
+                $('#numero_documento').removeAttr('maxlength');
+                $('#numero_documento').removeAttr('minlength');
+            }
+        });
     });
 </script>
 @endpush
