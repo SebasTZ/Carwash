@@ -229,6 +229,10 @@
             cancelarCompra();
         });
 
+        $('#comprobante_id').change(function() {
+            recalcularIGV();
+        });
+
         disableButtons();
 
         $('#impuesto').val(impuesto + '%');
@@ -276,8 +280,6 @@
 
         limpiarCampos();
         disableButtons();
-
-
     }
 
     function disableButtons() {
@@ -310,8 +312,7 @@
                     //Calcular valores
                     subtotal[cont] = round(cantidad * precioCompra);
                     sumas += subtotal[cont];
-                    igv = round(sumas / 100 * impuesto);
-                    total = round(sumas + igv);
+                    recalcularIGV();
 
                     //Crear la fila
                     let fila = '<tr id="fila' + cont + '">' +
@@ -347,16 +348,12 @@
         } else {
             showModal('Le faltan campos por llenar');
         }
-
-
-
     }
 
     function eliminarProducto(indice) {
         //Calcular valores
         sumas -= round(subtotal[indice]);
-        igv = round(sumas / 100 * impuesto);
-        total = round(sumas + igv);
+        recalcularIGV();
 
         //Mostrar los campos calculados
         $('#sumas').html(sumas);
@@ -369,7 +366,6 @@
         $('#fila' + indice).remove();
 
         disableButtons();
-
     }
 
     function limpiarCampos() {
@@ -378,6 +374,23 @@
         $('#cantidad').val('');
         $('#precio_compra').val('');
         $('#precio_venta').val('');
+    }
+
+    function recalcularIGV() {
+        let tipoComprobante = $('#comprobante_id option:selected').text();
+        if (tipoComprobante === 'Factura') {
+            igv = round(sumas / 100 * impuesto);
+        } else {
+            igv = 0;
+        }
+        total = round(sumas + igv);
+
+        //Mostrar los campos calculados
+        $('#sumas').html(sumas);
+        $('#igv').html(igv);
+        $('#total').html(total);
+        $('#impuesto').val(igv);
+        $('#inputTotal').val(total);
     }
 
     function round(num, decimales = 2) {
@@ -413,4 +426,4 @@
         })
     }
 </script>
-@endpush
+@endpushphp
