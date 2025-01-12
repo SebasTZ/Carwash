@@ -179,11 +179,11 @@
 
                         <!--Fecha de compra--->
                         <div class="col-sm-6 mb-2">
-                            <label for="fecha" class="form-label">Fecha de compra:</label>
-                            <input type="date" name="fecha" id="fecha" class="form-control border-success" value="<?php echo date("Y-m-d") ?>">
-                            @error('fecha')
-                            <small class="text-danger">{{ '*'.$message }}</small>
-                            @enderror
+                        <label for="fecha_hora" class="form-label">Fecha de compra:</label>
+                        <input type="datetime-local" name="fecha_hora" id="fecha_hora" class="form-control" value="{{ old('fecha_hora', now()->format('Y-m-d\TH:i')) }}">
+                        @error('fecha_hora')
+                        <small class="text-danger">{{ '*'.$message }}</small>
+                        @enderror
                         </div>
 
                         <!--Botones--->

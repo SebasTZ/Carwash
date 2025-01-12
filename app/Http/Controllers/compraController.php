@@ -52,52 +52,54 @@ class compraController extends Controller
      */
     public function store(StoreCompraRequest $request)
     {
-        try{
-            DB::beginTransaction();
+    try {
+        DB::beginTransaction();
 
-            //Llenar tabla compras
-            $compra = Compra::create($request->validated());
+        // Llenar tabla compras
+        $compra = Compra::create(array_merge(
+            $request->validated(),
+            ['created_at' => now()]
+        ));
 
-            //Llenar tabla compra_producto
-            //1.Recuperar los arrays
-            $arrayProducto_id = $request->get('arrayidproducto');
-            $arrayCantidad = $request->get('arraycantidad');
-            $arrayPrecioCompra = $request->get('arraypreciocompra');
-            $arrayPrecioVenta = $request->get('arrayprecioventa');
+        // Llenar tabla compra_producto
+        // 1. Recuperar los arrays
+        $arrayProducto_id = $request->get('arrayidproducto');
+        $arrayCantidad = $request->get('arraycantidad');
+        $arrayPrecioCompra = $request->get('arraypreciocompra');
+        $arrayPrecioVenta = $request->get('arrayprecioventa');
 
-            //2.Realizar el llenado
-            $siseArray = count($arrayProducto_id);
-            $cont = 0;
-            while($cont < $siseArray){
-                $compra->productos()->syncWithoutDetaching([
-                    $arrayProducto_id[$cont] => [
-                        'cantidad' => $arrayCantidad[$cont],
-                        'precio_compra' => $arrayPrecioCompra[$cont],
-                        'precio_venta' => $arrayPrecioVenta[$cont]
-                    ]
-                ]);
+        // 2. Realizar el llenado
+        $siseArray = count($arrayProducto_id);
+        $cont = 0;
+        while ($cont < $siseArray) {
+            $compra->productos()->syncWithoutDetaching([
+                $arrayProducto_id[$cont] => [
+                    'cantidad' => $arrayCantidad[$cont],
+                    'precio_compra' => $arrayPrecioCompra[$cont],
+                    'precio_venta' => $arrayPrecioVenta[$cont]
+                ]
+            ]);
 
-                //3.Actualizar el stock
-                $producto = Producto::find($arrayProducto_id[$cont]);
-                $stockActual = $producto->stock;
-                $stockNuevo = intval($arrayCantidad[$cont]);
+            // 3. Actualizar el stock
+            $producto = Producto::find($arrayProducto_id[$cont]);
+            $stockActual = $producto->stock;
+            $stockNuevo = intval($arrayCantidad[$cont]);
 
-                DB::table('productos')
-                ->where('id',$producto->id)
+            DB::table('productos')
+                ->where('id', $producto->id)
                 ->update([
                     'stock' => $stockActual + $stockNuevo
                 ]);
 
-                $cont++;
-
-            }
-
-            DB::commit();
-        }catch(Exception $e){
-            DB::rollBack();
+            $cont++;
         }
 
-        return redirect()->route('compras.index')->with('success','compra exitosa');
+        DB::commit();
+    } catch (Exception $e) {
+        DB::rollBack();
+    }
+
+    return redirect()->route('compras.index')->with('success', 'compra exitosa');
     }
 
     /**
