@@ -263,15 +263,36 @@
 <script>
     $(document).ready(function() {
 
-        $('#medio_pago').change(function() {
-            if ($(this).val() === 'mixto') {
-                $('#efectivo_div').show();
-                $('#yape_div').show();
-            } else {
-                $('#efectivo_div').hide();
-                $('#yape_div').hide();
+        $('#guardar').click(function(event) {
+        const medioPago = $('#medio_pago').val();
+        const totalVenta = parseFloat($('#inputTotal').val());
+        const efectivo = parseFloat($('#efectivo').val()) || 0;
+        const yape = parseFloat($('#yape').val()) || 0;
+
+        if (medioPago === 'mixto') {
+            const sumaPagos = efectivo + yape;
+
+            if (sumaPagos !== totalVenta) {
+                event.preventDefault(); // Detiene el envío del formulario
+                showModal(`La suma de efectivo (${efectivo}) y Yape (${yape}) debe ser igual al total (${totalVenta})`, 'error');
+                return false;
             }
-        });
+        }
+    });
+
+    $('#medio_pago').change(function() {
+        const medioPago = $(this).val();
+
+        if (medioPago === 'mixto') {
+            $('#efectivo_div').show();
+            $('#yape_div').show();
+        } else {
+            $('#efectivo_div').hide();
+            $('#yape_div').hide();
+            $('#efectivo').val('');
+            $('#yape').val('');
+        }
+    });
 
         $('#producto_id').change(mostrarValores);
 
