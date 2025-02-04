@@ -21,6 +21,10 @@ class ComprobanteSeeder extends Seeder
             [
                 'tipo_comprobante' => 'Factura',
                 'serie' => 'F'
+            ],
+            [
+                'tipo_comprobante' => 'Ticket',
+                'serie' => 'T'
             ]
         ]);
     }

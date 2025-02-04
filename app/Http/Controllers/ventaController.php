@@ -12,6 +12,10 @@ use App\Exports\VentasExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class ventaController extends Controller
 {
@@ -218,5 +222,23 @@ class ventaController extends Controller
         ]);
 
         return redirect()->route('ventas.index')->with('success','Venta eliminada');
+    }
+
+    public function ticket(Venta $venta)
+    {
+        return view('venta.ticket', compact('venta'));
+    }
+
+    public function printTicket(Venta $venta)
+    {
+        try {
+            $pdf = Pdf::loadView('venta.ticket_pdf', compact('venta'));
+            $fileName = 'ticket_' . $venta->id . '.pdf';
+            Storage::put('public/' . $fileName, $pdf->output());
+
+            return Storage::download('public/' . $fileName);
+        } catch (Exception $e) {
+            return redirect()->route('ventas.show', $venta)->with('error', 'Error al imprimir el ticket: ' . $e->getMessage());
+        }
     }
 }

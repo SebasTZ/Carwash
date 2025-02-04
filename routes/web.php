@@ -54,6 +54,9 @@ Route::get('ventas/export/diario', [VentaController::class, 'exportDiario'])->na
 Route::get('ventas/export/semanal', [VentaController::class, 'exportSemanal'])->name('ventas.export.semanal');
 Route::get('ventas/export/mensual', [VentaController::class, 'exportMensual'])->name('ventas.export.mensual');
 
+Route::get('ventas/{venta}/ticket', [VentaController::class, 'ticket'])->name('ventas.ticket');
+Route::get('ventas/{venta}/print-ticket', [VentaController::class, 'printTicket'])->name('ventas.printTicket');
+
 Route::get('/401', function () {
     return view('pages.401');
 });

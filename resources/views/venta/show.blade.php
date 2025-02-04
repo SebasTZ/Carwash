@@ -185,6 +185,19 @@
                 </div>
             </div>
 
+            <!-- Botón para ver el ticket -->
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <a href="{{ route('ventas.ticket', $venta) }}" class="btn btn-primary">Ver Ticket</a>
+                </div>
+            </div>
+
+            <!-- Botón para imprimir el ticket -->
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <a href="{{ route('ventas.printTicket', $venta) }}" class="btn btn-secondary">Imprimir Ticket</a>
+                </div>
+            </div>
 
     </div>
 
@@ -224,7 +237,6 @@
                         <td class="td-subtotal">
                             {{($item->pivot->cantidad) * ($item->pivot->precio_venta) - ($item->pivot->descuento)}}
                         </td>
-                    </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
