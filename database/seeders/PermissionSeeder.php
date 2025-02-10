@@ -21,6 +21,7 @@ class PermissionSeeder extends Seeder
 
             //Cliente
             'ver-cliente',
+            'ver-fidelizacion',
             'crear-cliente',
             'editar-cliente',
             'eliminar-cliente',

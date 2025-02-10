@@ -117,4 +117,9 @@ class clienteController extends Controller
 
         return redirect()->route('clientes.index')->with('success', $message);
     }
+
+    public function fidelizacion(Cliente $cliente)
+    {
+        return view('cliente.fidelizacion', compact('cliente'));
+    }
 }

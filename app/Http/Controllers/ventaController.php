@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Comprobante;
 use App\Models\Producto;
 use App\Models\Venta;
+use App\Models\Fidelizacion;
 use Exception;
 use App\Exports\VentasExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -123,6 +124,19 @@ class ventaController extends Controller
                 ]);
 
                 $cont++;
+            }
+
+            // Agregar puntos de fidelización
+            $cliente = $venta->cliente;
+            $puntos = $venta->total * 0.1; // Ejemplo: 10% del total de la venta en puntos
+
+            if ($cliente->fidelizacion) {
+                $cliente->fidelizacion->increment('puntos', $puntos);
+            } else {
+                Fidelizacion::create([
+                    'cliente_id' => $cliente->id,
+                    'puntos' => $puntos,
+                ]);
             }
 
             DB::commit();

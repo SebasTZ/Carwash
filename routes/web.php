@@ -56,6 +56,7 @@ Route::get('ventas/export/mensual', [VentaController::class, 'exportMensual'])->
 
 Route::get('ventas/{venta}/ticket', [VentaController::class, 'ticket'])->name('ventas.ticket');
 Route::get('ventas/{venta}/print-ticket', [VentaController::class, 'printTicket'])->name('ventas.printTicket');
+Route::get('clientes/{cliente}/fidelizacion', [ClienteController::class, 'fidelizacion'])->name('clientes.fidelizacion');
 
 Route::get('/401', function () {
     return view('pages.401');

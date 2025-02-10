@@ -106,6 +106,18 @@
                                     @endcan
                                 </div>
 
+                                <div> <!----Separador----->
+                                    <div class="vr"></div>
+                                </div>
+
+                                <div> <!------Ver fidelización---->
+                                    @can('ver-fidelizacion')
+                                    <a href="{{ route('clientes.fidelizacion', ['cliente' => $item->id]) }}" class="btn btn-datatable btn-icon btn-transparent-dark">
+                                        <i class="fa-solid fa-star"></i>
+                                    </a>
+                                    @endcan
+                                </div>
+
                             </div>
                         </td>
                     </tr>
@@ -137,9 +149,6 @@
             </table>
         </div>
     </div>
-
-
-
 </div>
 @endsection
 
