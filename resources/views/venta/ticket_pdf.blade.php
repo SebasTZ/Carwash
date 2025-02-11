@@ -82,6 +82,21 @@
 
         <div class="separator"></div>
 
+        <h3>Detalles del Pago:</h3>
+        <p><span class="bold">Medio de Pago:</span> {{ $venta->medio_pago }}</p>
+        <p><span class="bold">Efectivo:</span> {{ $venta->efectivo }}</p>
+        <p><span class="bold">Yape:</span> {{ $venta->yape }}</p>
+
+        <div class="separator"></div>
+
+        <h3>Servicio de Lavado:</h3>
+        <p><span class="bold">¿Servicio de Lavado?:</span> {{ $venta->servicio_lavado ? 'Sí' : 'No' }}</p>
+        @if($venta->servicio_lavado)
+        <p><span class="bold">Horario de Culminación del Lavado:</span> {{ \Carbon\Carbon::parse($venta->horario_lavado)->format('d-m-Y H:i') }}</p>
+        @endif
+
+        <div class="separator"></div>
+
         <p class="text-center">¡Gracias por su compra!</p>
     </div>
 </body>

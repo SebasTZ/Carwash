@@ -225,6 +225,20 @@
                             <input type="number" name="yape" id="yape" class="form-control" step="0.1">
                         </div>
 
+                        <!-- Servicio de lavado -->
+                        <div class="col-12">
+                            <label for="servicio_lavado" class="form-label">¿Servicio de lavado?</label>
+                            <input type="hidden" name="servicio_lavado" value="0">
+                            <input type="checkbox" name="servicio_lavado" id="servicio_lavado" value="1">
+                        </div>
+
+                        <!-- Horario de culminación del lavado -->
+                        <input type="hidden" name="horario_lavado" id="horario_lavado_hidden">
+                        <div class="col-12" id="horario_lavado_div" style="display: none;">
+                            <label for="horario_lavado" class="form-label">Horario de culminación del lavado:</label>
+                            <input type="time" name="horario_lavado" id="horario_lavado" class="form-control">
+                        </div>
+
                         <!--Botones--->
                         <div class="col-12 text-center">
                             <button type="submit" class="btn btn-success" id="guardar">Realizar venta</button>
@@ -296,6 +310,15 @@
 
         $('#producto_id').change(mostrarValores);
 
+        $('#servicio_lavado').change(function() {
+            if ($(this).is(':checked')) {
+                $('#horario_lavado_div').show();
+            } else {
+                $('#horario_lavado_div').hide();
+                $('#horario_lavado').val('');
+                $('#horario_lavado_hidden').val('');
+            }
+        });
 
         $('#btn_agregar').click(function() {
             agregarProducto();

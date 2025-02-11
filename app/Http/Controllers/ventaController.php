@@ -88,9 +88,24 @@ class ventaController extends Controller
 
             //Generar número de comprobante
             $numero_comprobante = Venta::generarNumeroComprobante($request->comprobante_id);
+            
+            $horarioLavado = $request->input('horario_lavado') 
+                ? now()->format('Y-m-d') . ' ' . $request->input('horario_lavado') . ':00'
+                : null;
 
-            //Llenar mi tabla venta
-            $venta = Venta::create(array_merge($request->validated(), ['numero_comprobante' => $numero_comprobante]));
+            // Llenar mi tabla venta
+            $ventaData = array_merge($request->validated(), [
+                'numero_comprobante' => $numero_comprobante,
+                'servicio_lavado' => $request->input('servicio_lavado'),
+                'horario_lavado' => $horarioLavado
+            ]);
+
+            // Verificar si el servicio de lavado está habilitado y si el horario de lavado está presente
+            if ($request->input('servicio_lavado') == 1 && empty($request->input('horario_lavado'))) {
+                return redirect()->route('ventas.create')->with('error', 'Debe proporcionar un horario de culminación del lavado.');
+            }
+
+            $venta = Venta::create($ventaData);
 
             //Llenar mi tabla venta_producto
             //1. Recuperar los arrays

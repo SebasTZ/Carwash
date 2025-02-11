@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Ticket de Venta')
+@section('title', 'Ticket de Venta local')
 
 @section('content')
 <div class="container">
@@ -33,5 +33,23 @@
     </table>
 
     <h4>Total: {{ number_format($venta->total, 2) }}</h4>
+
+    <h3>Detalles del Pago:</h3>
+    <p><strong>Medio de Pago:</strong> {{ $venta->medio_pago }}</p>
+    <p><strong>Efectivo:</strong> {{ $venta->efectivo }}</p>
+    <p><strong>Yape:</strong> {{ $venta->yape }}</p>
+
+    <h3>Servicio de Lavado:</h3>
+    <p><strong>¿Servicio de Lavado?:</strong> {{ $venta->servicio_lavado ? 'Sí' : 'No' }}</p>
+    @if($venta->servicio_lavado)
+    <p><strong>Horario de Culminación del Lavado:</strong> {{ \Carbon\Carbon::parse($venta->horario_lavado)->format('d-m-Y H:i') }}</p>
+    @endif
+
+    <h3>Comentarios:</h3>
+    <p>{{ $venta->comentarios }}</p>
+
+    <div class="text-center mt-4">
+        <button onclick="window.print()" class="btn btn-primary">Imprimir Ticket</button>
+    </div>
 </div>
 @endsection

@@ -185,17 +185,49 @@
                 </div>
             </div>
 
+            <!-- Servicio de lavado -->
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <div class="input-group" id="hide-group">
+                        <span class="input-group-text"><i class="fa-solid fa-bath"></i></span>
+                        <input disabled type="text" class="form-control" value="Servicio de lavado: ">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <span title="Servicio de lavado" class="input-group-text" id="icon-form"><i class="fa-solid fa-bath"></i></span>
+                        <input disabled type="text" class="form-control" value="{{$venta->servicio_lavado ? 'Sí' : 'No'}}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horario de culminación del lavado -->
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <div class="input-group" id="hide-group">
+                        <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
+                        <input disabled type="text" class="form-control" value="Horario de culminación del lavado: ">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <span title="Horario de culminación del lavado" class="input-group-text" id="icon-form"><i class="fa-solid fa-clock"></i></span>
+                        <input disabled type="text" class="form-control" value="{{$venta->horario_lavado ? \Carbon\Carbon::parse($venta->horario_lavado)->format('d-m-Y H:i') : 'N/A'}}">
+                    </div>
+                </div>
+            </div>
+
             <!-- Botón para ver el ticket -->
             <div class="row mb-4">
                 <div class="col-sm-6">
-                    <a href="{{ route('ventas.ticket', $venta) }}" class="btn btn-primary">Ver Ticket</a>
+                    <a href="{{ route('ventas.ticket', $venta) }}" class="btn btn-primary">Ver Ticket Local</a>
                 </div>
             </div>
 
             <!-- Botón para imprimir el ticket -->
             <div class="row mb-4">
                 <div class="col-sm-6">
-                    <a href="{{ route('ventas.printTicket', $venta) }}" class="btn btn-secondary">Imprimir Ticket</a>
+                    <a href="{{ route('ventas.printTicket', $venta) }}" class="btn btn-secondary">Imprimir Ticket Cliente</a>
                 </div>
             </div>
 

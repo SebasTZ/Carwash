@@ -36,6 +36,8 @@ class VentasExport implements FromCollection, WithHeadings, WithMapping, WithEve
             $venta->medio_pago,
             $venta->efectivo,
             $venta->yape,
+            $venta->servicio_lavado ? 'Sí' : 'No',
+            $venta->horario_lavado ? Carbon::parse($venta->horario_lavado)->format('d-m-Y H:i') : 'N/A'
         ];
     }
 
@@ -50,7 +52,9 @@ class VentasExport implements FromCollection, WithHeadings, WithMapping, WithEve
             'Comentarios',
             'Medio de pago',
             'Efectivo',
-            'Yape'
+            'Yape',
+            'Servicio de lavado',
+            'Horario de culminación del lavado'
         ];
     }
 

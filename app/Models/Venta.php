@@ -22,7 +22,9 @@ class Venta extends Model
         'comentarios', // Nuevo campo
         'medio_pago', // Nuevo campo
         'efectivo', // Nuevo campo
-        'yape' // Nuevo campo
+        'yape', // Nuevo campo
+        'servicio_lavado', // Nuevo campo
+        'horario_lavado' // Nuevo campo
     ];
 
     public function cliente(){
@@ -39,11 +41,11 @@ class Venta extends Model
 
     public static function generarNumeroComprobante($comprobante_id)
     {
-    $comprobante = Comprobante::find($comprobante_id);
-    $ultimaVenta = self::where('comprobante_id', $comprobante->id)->latest()->first();
-    $ultimoNumero = $ultimaVenta ? intval(substr($ultimaVenta->numero_comprobante, 1)) : 0;
-    $nuevoNumero = $ultimoNumero + 1;
-    return $comprobante->serie . str_pad($nuevoNumero, 4, '0', STR_PAD_LEFT);
+        $comprobante = Comprobante::find($comprobante_id);
+        $ultimaVenta = self::where('comprobante_id', $comprobante->id)->latest()->first();
+        $ultimoNumero = $ultimaVenta ? intval(substr($ultimaVenta->numero_comprobante, 1)) : 0;
+        $nuevoNumero = $ultimoNumero + 1;
+        return $comprobante->serie . str_pad($nuevoNumero, 4, '0', STR_PAD_LEFT);
     }
 
     public function productos(){

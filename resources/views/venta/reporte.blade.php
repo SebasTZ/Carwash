@@ -50,6 +50,8 @@
                         <th>Medio de pago</th>
                         <th>Efectivo</th>
                         <th>Yape</th>
+                        <th>Servicio de lavado</th>
+                        <th>Horario de culminación del lavado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,6 +94,12 @@
                         </td>
                         <td>
                             {{$item->yape}}
+                        </td>
+                        <td>
+                            {{$item->servicio_lavado ? 'Sí' : 'No'}}
+                        </td>
+                        <td>
+                            {{$item->horario_lavado ? \Carbon\Carbon::parse($item->horario_lavado)->format('d-m-Y H:i') : 'N/A'}}
                         </td>
                     </tr>
                     @endforeach

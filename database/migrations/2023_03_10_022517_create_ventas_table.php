@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('medio_pago')->default('efectivo'); 
             $table->decimal('efectivo', 8, 2)->nullable(); 
             $table->decimal('yape', 8, 2)->nullable();
+            $table->boolean('servicio_lavado')->default(false);
+            $table->dateTime('horario_lavado')->nullable();
             $table->timestamps();
         });
     }
