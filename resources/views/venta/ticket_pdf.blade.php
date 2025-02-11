@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket de Venta</title>
     <style>
+        @page {
+            size: auto;
+            margin: 0;
+        }
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: monospace;
             font-size: 12px;
             margin: 0;
             padding: 0;
@@ -14,40 +18,44 @@
         }
         .container {
             width: 100%;
-            max-width: 280px; /* Ticket estándar para impresoras térmicas */
+            max-width: 270px; /* Ajustable según ticketera */
             margin: 0 auto;
-            padding: 10px;
+            padding: 5px;
         }
         .text-center {
             text-align: center;
         }
-        .separator {
-            border-top: 1px dashed #000;
-            margin: 10px 0;
-        }
         .bold {
             font-weight: bold;
         }
-        table {
-            width: 100%;
-            margin-top: 10px;
+        .separator {
+            text-align: center;
         }
-        table tr td {
-            vertical-align: top;
+        .separator:before {
+            content: "------------------------------";
+            display: block;
+            text-align: center;
         }
         .total {
             text-align: right;
             margin-top: 10px;
         }
+        table {
+            width: 100%;
+            margin-top: 5px;
+            border-collapse: collapse;
+        }
+        table tr td {
+            vertical-align: top;
+            padding: 2px 0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="text-center">
-            <h2>Nombre de la Empresa</h2>
-            <p>Dirección: Lorem Ipsum, 123</p>
-            <p>Teléfono: 123-456-789</p>
-        </div>
+        <p class="bold text-center">Nombre de la Empresa</p>
+        <p class="text-center">Dirección: Lorem Ipsum, 123</p>
+        <p class="text-center">Teléfono: 123-456-789</p>
 
         <div class="separator"></div>
 
@@ -58,22 +66,18 @@
         <div class="separator"></div>
 
         <table>
-            <thead>
-                <tr>
-                    <td class="bold">Producto</td>
-                    <td class="bold" style="text-align:right;">Cant</td>
-                    <td class="bold" style="text-align:right;">Subtotal</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($venta->productos as $producto)
-                <tr>
-                    <td>{{ $producto->nombre }}</td>
-                    <td style="text-align:right;">{{ $producto->pivot->cantidad }}</td>
-                    <td style="text-align:right;">{{ number_format($producto->pivot->cantidad * $producto->pivot->precio_venta, 2) }}</td>
-                </tr>
-                @endforeach
-            </tbody>
+            <tr>
+                <td class="bold">Producto</td>
+                <td class="bold" style="text-align:right;">Cant</td>
+                <td class="bold" style="text-align:right;">Subtotal</td>
+            </tr>
+            @foreach ($venta->productos as $producto)
+            <tr>
+                <td>{{ $producto->nombre }}</td>
+                <td style="text-align:right;">{{ $producto->pivot->cantidad }}</td>
+                <td style="text-align:right;">{{ number_format($producto->pivot->cantidad * $producto->pivot->precio_venta, 2) }}</td>
+            </tr>
+            @endforeach
         </table>
 
         <div class="separator"></div>
@@ -82,17 +86,15 @@
 
         <div class="separator"></div>
 
-        <h3>Detalles del Pago:</h3>
         <p><span class="bold">Medio de Pago:</span> {{ $venta->medio_pago }}</p>
         <p><span class="bold">Efectivo:</span> {{ $venta->efectivo }}</p>
         <p><span class="bold">Yape:</span> {{ $venta->yape }}</p>
 
         <div class="separator"></div>
 
-        <h3>Servicio de Lavado:</h3>
         <p><span class="bold">¿Servicio de Lavado?:</span> {{ $venta->servicio_lavado ? 'Sí' : 'No' }}</p>
         @if($venta->servicio_lavado)
-        <p><span class="bold">Horario de Culminación del Lavado:</span> {{ \Carbon\Carbon::parse($venta->horario_lavado)->format('d-m-Y H:i') }}</p>
+        <p><span class="bold">Horario Culminación:</span> {{ \Carbon\Carbon::parse($venta->horario_lavado)->format('d-m-Y H:i') }}</p>
         @endif
 
         <div class="separator"></div>
