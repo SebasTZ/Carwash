@@ -60,11 +60,19 @@
                         @enderror
                     </div>
 
+                    <!------Teléfono---->
+                    <div class="col-12">
+                        <label for="telefono" class="form-label">Teléfono:</label>
+                        <input type="text" name="telefono" id="telefono" class="form-control" value="{{old('telefono')}}">
+                        @error('telefono')
+                        <small class="text-danger">{{'*'.$message}}</small>
+                        @enderror
+                    </div>
+
                     <!--------------Documento------->
                     <div class="col-md-6">
                         <label for="documento_id" class="form-label">Tipo de documento:</label>
                         <select class="form-select" name="documento_id" id="documento_id">
-                            <option value="" selected disabled>Seleccione una opción</option>
                             @foreach ($documentos as $item)
                             <option value="{{$item->id}}" {{ old('documento_id') == $item->id ? 'selected' : '' }}>{{$item->tipo_documento}}</option>
                             @endforeach
@@ -89,8 +97,6 @@
             </div>
         </form>
     </div>
-
-
 </div>
 @endsection
 

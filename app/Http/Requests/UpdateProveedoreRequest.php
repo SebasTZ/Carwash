@@ -21,12 +21,13 @@ class UpdateProveedoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        $proveedore = $this->route('proveedore');
         return [
-            'razon_social' => 'required|max:80',
-            'direccion' => 'required|max:80',
-            'documento_id' => 'required|integer|exists:documentos,id',
-            'numero_documento' => 'required|max:20|unique:personas,numero_documento,'.$proveedore->persona->id
+            'razon_social' => 'required|string|max:80',
+            'direccion' => 'required|string|max:80',
+            'tipo_persona' => 'required|string|max:20',
+            'telefono' => 'nullable|string|max:20',
+            'documento_id' => 'required|exists:documentos,id',
+            'numero_documento' => 'required|string|max:20',
         ];
     }
 }

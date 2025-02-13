@@ -40,6 +40,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Dirección</th>
+                        <th>Teléfono</th>
                         <th>Documento</th>
                         <th>Tipo de persona</th>
                         <th>Estado</th>
@@ -54,6 +55,9 @@
                         </td>
                         <td>
                             {{$item->persona->direccion}}
+                        </td>
+                        <td>
+                            {{$item->persona->telefono}}
                         </td>
                         <td>
                             <p class="fw-semibold mb-1">{{$item->persona->documento->tipo_documento}}</p>

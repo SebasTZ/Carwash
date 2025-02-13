@@ -10,7 +10,7 @@ use App\Models\Proveedore;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class proveedorController extends Controller
+class ProveedorController extends Controller
 {
     function __construct()
     {
@@ -19,13 +19,14 @@ class proveedorController extends Controller
         $this->middleware('permission:editar-proveedore', ['only' => ['edit', 'update']]);
         $this->middleware('permission:eliminar-proveedore', ['only' => ['destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $proveedores = Proveedore::with('persona.documento')->get();
-        return view('proveedore.index',compact('proveedores'));
+        return view('proveedore.index', compact('proveedores'));
     }
 
     /**
@@ -34,7 +35,7 @@ class proveedorController extends Controller
     public function create()
     {
         $documentos = Documento::all();
-        return view('proveedore.create',compact('documentos'));
+        return view('proveedore.create', compact('documentos'));
     }
 
     /**
@@ -71,7 +72,7 @@ class proveedorController extends Controller
     {
         $proveedore->load('persona.documento');
         $documentos = Documento::all();
-        return view('proveedore.edit',compact('proveedore','documentos'));
+        return view('proveedore.edit', compact('proveedore', 'documentos'));
     }
 
     /**
@@ -79,18 +80,18 @@ class proveedorController extends Controller
      */
     public function update(UpdateProveedoreRequest $request, Proveedore $proveedore)
     {
-        try{
+        try {
             DB::beginTransaction();
 
-            Persona::where('id',$proveedore->persona->id)
-            ->update($request->validated());
+            Persona::where('id', $proveedore->persona->id)
+                ->update($request->validated());
 
             DB::commit();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
         }
 
-        return redirect()->route('proveedores.index')->with('success','Proveedor editado');
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor editado');
     }
 
     /**

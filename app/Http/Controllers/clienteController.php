@@ -52,6 +52,7 @@ class clienteController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            return redirect()->route('clientes.create')->withErrors(['error' => 'Error al registrar el cliente']);
         }
 
         return redirect()->route('clientes.index')->with('success', 'Cliente registrado');

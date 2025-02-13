@@ -50,6 +50,15 @@
                         @enderror
                     </div>
 
+                    <!------Teléfono---->
+                    <div class="col-12">
+                        <label for="telefono" class="form-label">Teléfono:</label>
+                        <input type="text" name="telefono" id="telefono" class="form-control" value="{{old('telefono',$proveedore->persona->telefono)}}">
+                        @error('telefono')
+                        <small class="text-danger">{{'*'.$message}}</small>
+                        @enderror
+                    </div>
+
                     <!--------------Documento------->
                     <div class="col-md-6">
                         <label for="documento_id" class="form-label">Tipo de documento:</label>
@@ -82,8 +91,6 @@
             </div>
         </form>
     </div>
-
-
 </div>
 @endsection
 
