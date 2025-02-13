@@ -21,7 +21,7 @@
     </ol>
 
     <div class="card text-bg-light">
-        <form action="{{ route('proveedores.store') }}" method="post">
+        <form id="proveedor-form" action="{{ route('proveedores.store') }}" method="post">
             @csrf
             <div class="card-body">
                 <div class="row g-3">
@@ -128,6 +128,18 @@
             } else {
                 $('#numero_documento').removeAttr('maxlength');
                 $('#numero_documento').removeAttr('minlength');
+            }
+        });
+
+        $('#proveedor-form').on('submit', function(e) {
+            let telefono = $('#telefono').val();
+            if (!telefono) {
+                let tipoPersona = $('#tipo_persona').val();
+                if (tipoPersona == 'natural') {
+                    $('#telefono').val('999999999'); // Valor predeterminado para persona natural
+                } else if (tipoPersona == 'juridica') {
+                    $('#telefono').val('888888888'); // Valor predeterminado para persona jurídica
+                }
             }
         });
     });
