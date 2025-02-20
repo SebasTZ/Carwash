@@ -54,7 +54,7 @@
 <body>
     <div class="container">
         <p class="bold text-center">Brabus carwash & detailing</p>
-        <p class="text-center">Dirección: Via Colectora 2509, Amarilis 10002</p>
+        <p class="text-center">Dirección: Av. Via Colectora Nº MZ G LT-16 Urb. Santa Maria - AMARILIS</p>
         <p class="text-center">Teléfono: 999 592 599</p>
 
         <div class="separator"></div>

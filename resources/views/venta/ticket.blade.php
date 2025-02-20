@@ -6,6 +6,8 @@
 <div class="container">
     <h1 class="text-center">Brabus carwash & detailing</h1>
     <h2 class="text-center">Ticket de Venta</h2>
+    <p class="text-center">Dirección: Av. Via Colectora Nº MZ G LT-16 Urb. Santa Maria - AMARILIS</p>
+    <p class="text-center">Teléfono: 999 592 599</p>
     <p><strong>Número de Comprobante:</strong> {{ $venta->numero_comprobante }}</p>
     <p><strong>Fecha y Hora:</strong> {{ \Carbon\Carbon::parse($venta->fecha_hora)->format('d-m-Y H:i') }}</p>
     <p><strong>Cliente:</strong> {{ $venta->cliente->persona->razon_social }}</p>
