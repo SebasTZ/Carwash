@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="text-center">Nombre de la Empresa</h1>
+    <h1 class="text-center">Brabus carwash & detailing</h1>
     <h2 class="text-center">Ticket de Venta</h2>
     <p><strong>Número de Comprobante:</strong> {{ $venta->numero_comprobante }}</p>
     <p><strong>Fecha y Hora:</strong> {{ \Carbon\Carbon::parse($venta->fecha_hora)->format('d-m-Y H:i') }}</p>
